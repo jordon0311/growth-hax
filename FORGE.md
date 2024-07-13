@@ -10,9 +10,9 @@
 
 # Output
 
-- location
 - Bio
-- Skills
-- interests
-- quote from engineer
 - color pallete (primary, background, accent, font)
+- interests
+- location
+- quote from engineer
+- Skills
