@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  font-family: sans-serif;
+}
+
+@keyframes blinker {
+  0% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+}
+
+.blinker::after {
+  content: "_";
+  display: inline-block;
+  animation: blinker 0.75s ease-in-out infinite;
+}
