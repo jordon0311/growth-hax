@@ -44,5 +44,5 @@ export async function fetchGithubContributions(
       return { data: null };
     });
 
-  return res;
+  return res.data;
 }

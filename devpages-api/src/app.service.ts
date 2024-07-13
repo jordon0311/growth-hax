@@ -95,6 +95,9 @@ export class AppService {
         blog: githubUser.blog,
         topProjects: repos,
         favoriteProjects: favoriteProjects,
+        contributions:
+          contributionRes.data.user.contributionsCollection
+            .contributionCalendar,
       };
     } catch (error) {
       console.error(error);

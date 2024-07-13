@@ -1,3 +1,4 @@
+import { ContributionDay } from 'src/types/githubContributions';
 import { GithubUserSocial } from 'src/types/githubUser';
 
 export type DevWebsite = {
@@ -38,6 +39,12 @@ export type DevWebsiteGithubProps = {
 
   topProjects: Project[];
   favoriteProjects: Project[];
+  contributions: {
+    totalContributions: number;
+    weeks: {
+      contributionDays: ContributionDay[];
+    }[];
+  };
 };
 
 export type Project = {
