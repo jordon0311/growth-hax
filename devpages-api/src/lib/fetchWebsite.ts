@@ -1,6 +1,13 @@
-import { isAxiosError } from 'axios';
-import chalk from 'chalk';
-import { axiosInstance } from './axiosInstance';
+import axios, { isAxiosError } from 'axios';
+
+const axiosInstance = axios.create({
+  baseURL: 'https://api.forge-ml.com/q/jordonwaters',
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${process.env.FORGE_API_KEY}`,
+  },
+  timeout: 10000,
+});
 
 export const fetchWebsite = async (prompt: string) => {
   try {
@@ -11,13 +18,11 @@ export const fetchWebsite = async (prompt: string) => {
   } catch (error) {
     if (isAxiosError(error)) {
       console.error(
-        chalk.redBright(
-          'Error fetching website schema: ',
-          JSON.stringify(error.response, null, 2),
-        ),
+        'Error fetching website schema: ',
+        JSON.stringify(error.response.data, null, 2),
       );
     } else {
-      console.error(chalk.redBright('Error fetching website schema: ', error));
+      console.error('Error fetching website schema: ', error);
     }
   }
 };
