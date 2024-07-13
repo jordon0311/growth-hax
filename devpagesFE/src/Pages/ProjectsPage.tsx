@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ProjectCard from "../components/ProjectCard";
+import { ReturnedDataType } from '../types.types';
 
 const exampleProjects = [
     {
@@ -19,7 +19,7 @@ const exampleProjects = [
     }
 ]
 
-const ProjectsPage = () => {
+const ProjectsPage = (props: { data: ReturnedDataType }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const handlePrev = () => {
@@ -33,13 +33,12 @@ const ProjectsPage = () => {
     return (
         <div id="projects" className="md:flex flex-col lg:h-screen border md:px-10 pt-4 md:bg-slate-100 ">
             <h1 className="text-4xl font-bold pt-5 mb-5 md:mb-0 text-center">Projects</h1>
-            <div id="default-carousel" className="relative w-full h-[600px]" data-carousel="slide">
+            <div id="default-carousel" className="relative w-full h-[600px] hidden md:block" data-carousel="slide">
                 <div className="flex flex-col justify-center items-center md:h-full">
                     {exampleProjects.map((project, index) => (
-                        <div key={index} className={`block rounded-lg bg-white shadow-secondary-1 ${index === currentSlide ? 'block' : 'hidden'} border border-2 max-w-[550px]`}>
+                        <div key={index} className={`block rounded-lg bg-white shadow-secondary-1 ${index === currentSlide ? 'block' : 'hidden'} border border-2 sm:min-w-[550px]`}>
                             <a href="#!">
                                 <img
-
                                     className="rounded-t-lg h-[200px] w-full"
                                     src={project.image}
                                     alt="" />
@@ -48,7 +47,7 @@ const ProjectsPage = () => {
                                 <div >
                                     <h5 className="mb-2 text-xl font-medium leading-tight">{project.title}</h5>
                                     <p className="text-base text-wrap">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut dolor at nunc aliquam.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut dolor at nunc aliquam.
+                                        {project.description}
                                     </p>
                                 </div>
                                 <a href="#!" className=''>
@@ -81,6 +80,31 @@ const ProjectsPage = () => {
                         <span className="sr-only">Next</span>
                     </span>
                 </button>
+            </div>
+            <div className="block md:hidden">
+                {exampleProjects.map((project, index) => (
+                    <div key={index} className="block rounded-lg bg-white shadow-secondary-1 border border-2 mb-4">
+                        <a href="#!">
+                            <img
+                                className="rounded-t-lg h-[200px] w-full"
+                                src={project.image}
+                                alt="" />
+                        </a>
+                        <div className="p-6 text-surface flex flex-col justify-between">
+                            <div >
+                                <h5 className="mb-2 text-xl font-medium leading-tight">{project.title}</h5>
+                                <p className="text-base text-wrap">
+                                    {project.description}
+                                </p>
+                            </div>
+                            <a href="#!" className=''>
+                                <button className="bg-white hover:bg-gray-100 mt-5 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                                    Visit project
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div >
     )
