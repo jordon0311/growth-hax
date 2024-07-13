@@ -1,19 +1,21 @@
+import chalk from "chalk";
+import "dotenv/config";
 import express from "express";
-import path from "path";
-import agent from "../agent";
 import { Browser, Logger } from "nolita";
+import path from "path";
+import { fileURLToPath } from "url";
+import agent from "../agent";
+import { nolitarc } from "../agent/config";
 import inventory from "../extensions/inventory";
 import { CustomSchema } from "../extensions/schema";
-import { nolitarc } from "../agent/config";
-import "dotenv/config";
-import { fileURLToPath } from "url";
+import { fetchWebsite } from "../external/fetchWebsite";
+import { EXAMPLE_PROMPT_PARAMS, getForgePrompt } from "../forge/util/getPrompt";
 
 // add dirname var for esm
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const { hdrApiKey } = nolitarc();
-
 
 const app = express();
 const port = process.env.NODE_ENV === "production" ? 80 : 3040;
@@ -34,7 +36,7 @@ app.all("*", function (req, res, next) {
   res.header("Access-Control-Allow-Origin", origin);
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept",
+    "Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
 });
@@ -50,7 +52,10 @@ app.get("/api/browse", async (req, res) => {
     let inc = msg;
     try {
       inc = JSON.parse(msg);
-    } catch (e) {}
+    } catch (e) {
+      console.error(chalk.redBright("Error parsing log message: ", e));
+    }
+    console.log(inc.message || msg);
     return res.write(`data: ${inc.message || msg}\n\n`);
   });
   const browser = await Browser.launch(true, agent, logger, {
@@ -67,7 +72,7 @@ app.get("/api/browse", async (req, res) => {
   const answer = await page.browse(req.query.objective, {
     schema: CustomSchema,
     maxTurns: parseInt(req.query.maxIterations as string) || 10,
-  })
+  });
   if (answer) {
     res.write(`data: ${JSON.stringify(answer)}\n\n`);
     res.write(`data: {"done": true}\n\n`);
@@ -77,4 +82,13 @@ app.get("/api/browse", async (req, res) => {
     res.write(`data: {"done": true}\n\n`);
     return res.end();
   }
+});
+
+app.get("/test", async (req, res) => {
+  const forgePrompt = getForgePrompt(EXAMPLE_PROMPT_PARAMS);
+  console.log({ forgePrompt });
+  const forgeData = await fetchWebsite(forgePrompt);
+  console.log({ forgeData });
+
+  res.json({ data: forgeData });
 });
