@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -8,5 +8,11 @@ export class AppController {
   @Get()
   async getHello(): Promise<string> {
     return this.appService.getHello();
+  }
+
+  @Get('/user/:username')
+  async fetchUser(@Param('username') username: string) {
+    const user = await this.appService.fetchUser(username);
+    return { data: user };
   }
 }
