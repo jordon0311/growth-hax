@@ -1,5 +1,6 @@
 import GithubBioCard from "./GithubBioCard"
 import { ReturnedDataType } from "../types.types"
+import GithubSquares from "./GithubSquares"
 
 const BioTextContainer = ({ data }: { data: ReturnedDataType }) => {
     const tagColors = ['bg-blue-100', 'bg-green-100', 'bg-red-100', 'bg-yellow-100', 'bg-indigo-100', 'bg-purple-100', 'bg-pink-100']
@@ -17,6 +18,10 @@ const BioTextContainer = ({ data }: { data: ReturnedDataType }) => {
                     {data.data.skills.map((skill, index) => (
                         <span className={`${tagColors[index % tagColors.length]} text-blue-800 text-lg font-medium me-2 px-2.5 py-0.5 rounded`}>{skill}</span>
                     ))}
+                </div>
+                <div className="mt-5">
+                    <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-9000">Github Contributions</h2>
+                    <GithubSquares data={data} />
                 </div>
             </div>
         </div>
