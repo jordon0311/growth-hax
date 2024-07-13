@@ -20,16 +20,16 @@ const GithubBioCard = ({ data }: { data: ReturnedDataType }) => {
                     </div>
                     <div className="flex justify-center mt-4">
                         <div>
-                            <p className="text-sm text-gray-600">Stars</p>
-                            <p id="stars" className="text-lg font-semibold text-gray-800">2</p>
+                            <p className="text-sm text-gray-600">Contributions</p>
+                            <p id="stars" className="text-lg font-semibold text-gray-800">{data.data.contributions.totalContributions}</p>
                         </div>
-                        <div className="ml-6">
+                        {/* <div className="ml-6">
                             <p className="text-sm text-gray-600">Forks</p>
                             <p id="forks" className="text-lg font-semibold text-gray-800">4000</p>
-                        </div>
+                        </div> */}
                         <div className="ml-6">
-                            <p className="text-sm text-gray-600">Language</p>
-                            <p id="language" className="text-lg font-semibold text-gray-800">javascript</p>
+                            <p className="text-sm text-gray-600">Top Skill</p>
+                            <p id="language" className="text-lg font-semibold text-gray-800">{data.data.skills[0]}</p>
                         </div>
                     </div>
                 </div>

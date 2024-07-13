@@ -1,35 +1,53 @@
 export interface ReturnedDataType {
   data: {
-    _meta: {
-      usage: {
-        completion_tokens: number;
-        prompt_tokens: number;
-        total_tokens: number;
-      };
-    };
-    activityChart: null;
-    avatarUrl: string;
     bio: string;
-    blog: string;
     colorPalette: {
       accent: string;
       background: string;
       foreground: string;
       primary: string;
     };
-    company: null;
-    contactEmail: null;
     fontFamily: string;
-    githubUrl: string;
     interests: string[];
-    location: null;
-    name: string;
+    location: string | null;
     quote: string;
     skills: string[];
-    socialLinks: {
-      provider: string;
-      url: string;
-    }[];
-    topProjects: any[];
+    name: string | null;
+    avatarUrl: string;
+    githubUrl: string;
+    company: string | null;
+    contactEmail: string | null;
+    socialLinks: GithubUserSocial[];
+    blog: string;
+    topProjects: Project[];
+    favoriteProjects: Project[];
+    contributions: {
+      totalContributions: number;
+      weeks: {
+        contributionDays: ContributionDay[];
+      }[];
+    };
   };
 }
+
+export type GithubUserSocial = {
+  provider: string;
+  url: string;
+};
+export type ContributionDay = {
+  contributionCount: number;
+  date: string;
+};
+
+export type Project = {
+  name: string;
+  url: string;
+  description: string | null;
+  language: string;
+  stargazersCount: number;
+  owner: {
+    username: string;
+    avatarUrl: string;
+    githubUrl: string;
+  };
+};
