@@ -22,6 +22,7 @@ export class AppController {
     @Param('username') username: string,
   ): Promise<{ data: WebRes }> {
     const devPage = await this.appService.createUserDevPage(username);
+    console.log('devPage', devPage);
     return { data: devPage };
   }
 }

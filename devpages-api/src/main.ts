@@ -15,6 +15,17 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
   /** End Open API documentation  */
 
+  app.enableCors({
+    allowedHeaders: [
+      'Authorization',
+      'Content-Length',
+      'Content-Type',
+      'Origin',
+    ],
+    optionsSuccessStatus: 200,
+    origin: '*',
+  });
+
   await app.listen(3000);
 }
 bootstrap();
