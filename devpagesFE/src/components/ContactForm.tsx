@@ -1,13 +1,22 @@
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import { ReturnedDataType } from '../types.types';
 
-const ContactForm = () => {
+const ContactForm = (props: { data: ReturnedDataType }) => {
+    const SocialLinks = props.data.data.socialLinks;
+
     return (
         <div className="shadow-2xl p-5 lg:w-1/2 lg:rounded-xl lg:m-4 lg:h-2/3">
             <form className="">
                 <h2 className="text-3xl font-bold mb-5 flex flex-row justify-between">Contact Me <span className='flex gap-5 mb-5'>
-                    <GitHubIcon fontSize="inherit" style={{ fontSize: 38 }} />
-                    <LinkedInIcon fontSize="inherit" style={{ fontSize: 40 }} />
+                    {SocialLinks.map((link, index) => (
+                        <a href={link.url} target="_blank" key={index}>
+                            {link.provider === "github" && <GitHubIcon fontSize="inherit" style={{ fontSize: 38 }} />}
+                            {link.provider === "linkedin" && <LinkedInIcon fontSize="inherit" style={{ fontSize: 40 }} />}
+                            {link.provider === "twitter" && <TwitterIcon fontSize="inherit" style={{ fontSize: 40 }} />}
+                        </a>
+                    ))}
                 </span></h2>
                 <div className="mb-5">
                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Name</label>

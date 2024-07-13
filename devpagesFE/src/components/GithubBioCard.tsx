@@ -1,9 +1,12 @@
-const GithubBioCard = () => {
+import { ReturnedDataType } from "../types.types";
+
+const GithubBioCard = ({ data }: { data: ReturnedDataType }) => {
+    const githubUsername = data.data.githubUrl.split('https://github.com/')[1];
     return (
-        <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="bg-white shadow-lg rounded-lg overflow-hidden m-5 border-2">
             <div className="relative">
                 {/* TODO: Add the github corner */}
-                <a href="" className="github-corner" aria-label="View source on GitHub">
+                <a href={data.data.githubUrl} target="_blank" className="github-corner" aria-label="View source on GitHub">
                     <svg width="80" height="80" viewBox="0 0 250 250" style={{ fill: '#151513', color: '#fff', position: 'absolute', top: 0, border: 0, right: 0 }} aria-hidden="true">
                         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
                         <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style={{ transformOrigin: '130px 106px' }} className="octo-arm"></path>
@@ -12,8 +15,8 @@ const GithubBioCard = () => {
                 </a>
                 <div className="text-center px-6 py-4">
                     <div className="py-4 ">
-                        <h3 className="text-xl font-semibold text-gray-800">githubuser</h3>
-                        <p id="description" className="text-sm font-medium text-gray-600"></p>
+                        <h3 className="text-xl font-semibold text-gray-800"></h3>
+                        <p id="description" className="text-lg font-medium text-gray-600">{githubUsername}</p>
                     </div>
                     <div className="flex justify-center mt-4">
                         <div>
