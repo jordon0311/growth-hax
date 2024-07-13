@@ -29,8 +29,11 @@ export class AppService {
   }
 
   async getWebsite(prompt: PromptParams) {
+    console.log(prompt);
     const forgePrompt = getForgePrompt(prompt);
+    console.log({ forgePrompt });
     const forgeData = await fetchWebsite(forgePrompt);
+    console.log({ forgeData });
     return forgeData;
   }
 
@@ -93,8 +96,12 @@ export class AppService {
         socialLinks: socials,
         bio: githubUser.bio,
         blog: githubUser.blog,
-        topProjects: repos,
-        favoriteProjects: favoriteProjects,
+        topProjects: repos
+          .sort((a, b) => b.stargazersCount - a.stargazersCount)
+          .slice(0, 3),
+        favoriteProjects: favoriteProjects
+          .sort((a, b) => b.stargazersCount - a.stargazersCount)
+          .slice(0, 3),
         contributions:
           contributionRes.data.user.contributionsCollection
             .contributionCalendar,
