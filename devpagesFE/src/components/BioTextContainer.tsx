@@ -19,17 +19,6 @@ const BioTextContainer = ({ data }: { data: ReturnedDataType }) => {
                     ))}
                 </div>
             </div>
-            {/* TODO use styles to set the colors */}
-            {/* <div className="flex flex-wrap gap-2">
-                <span style={{ backgroundColor: data.data.colorPalette.primary }} className="text-[#fff] p-2 rounded-lg">hellloo</span>
-                <span style={{ backgroundColor: data.data.colorPalette.accent }} className="text-[#fff] p-2 rounded-lg">h</span>
-                <span style={{ backgroundColor: data.data.colorPalette.background }} className="text-[#fff] p-2 rounded-lg">h</span>
-                <span style={{ backgroundColor: data.data.colorPalette.foreground }} className="text-black p-2 rounded-lg">h</span>
-            </div> */}
-            {/* <div className="mt-5">
-                <GithubBioCard data={data} />
-            </div> */}
-
         </div>
     )
 }
