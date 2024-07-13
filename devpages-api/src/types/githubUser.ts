@@ -38,3 +38,13 @@ export type GithubUserSocial = {
   provider: string;
   url: string;
 };
+
+export type GithubRepo = {
+  id: number;
+  name: string;
+  html_url: string;
+  description: string | null;
+  language: string;
+  stargazers_count: number;
+  owner: GithubUser;
+};

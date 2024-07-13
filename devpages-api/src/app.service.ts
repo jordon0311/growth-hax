@@ -1,14 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { AxiosInstance } from 'axios';
+
 import {
   EXAMPLE_PROMPT_PARAMS,
   getForgePrompt,
   PromptParams,
 } from 'forge/util/getPrompt';
+
+import { fetchGithubContributions } from 'src/lib/fetchGithubContributions';
+
 import { gitAxios } from 'src/lib/fetchGithubUser';
 import { fetchWebsite } from 'src/lib/fetchWebsite';
-import { DevWebsiteGithubProps } from 'src/types/devWebsite';
-import { GithubUser, GithubUserSocial } from 'src/types/githubUser';
+import { DevWebsiteGithubProps, Project } from 'src/types/devWebsite';
+import { GithubRepo, GithubUser, GithubUserSocial } from 'src/types/githubUser';
 
 @Injectable()
 export class AppService {
@@ -33,14 +37,48 @@ export class AppService {
   async fetchUserInfo(username: string): Promise<DevWebsiteGithubProps> {
     const res = await this.gitApi.get<GithubUser>(`/users/${username}`);
     const githubUser = res.data;
+    console.log({ githubUser });
 
     const socialAccountsRes = await this.gitApi<GithubUserSocial[]>(
       `/users/${username}/social_accounts`,
     );
     const socials = socialAccountsRes.data;
 
-    console.log({ socials });
+    const favoriteProjectsRes = await this.gitApi<GithubRepo[]>(
+      `/users/${username}/starred`,
+    );
+    const favoriteProjects: Project[] = favoriteProjectsRes.data
+      .map((p) => ({
+        name: p.name,
+        url: p.html_url,
+        description: p.description,
+        language: p.language,
+        stargazersCount: p.stargazers_count,
+        owner: {
+          username: p.owner.login,
+          avatarUrl: p.owner.avatar_url,
+          githubUrl: p.owner.html_url,
+        },
+      }))
+      .sort((a, b) => b.stargazersCount - a.stargazersCount);
+    const repoRes = await this.gitApi<GithubRepo[]>(`/users/${username}/repos`);
+    const repos = repoRes.data
+      .map((p) => ({
+        name: p.name,
+        url: p.html_url,
+        description: p.description,
+        language: p.language,
+        stargazersCount: p.stargazers_count,
+        owner: {
+          username: p.owner.login,
+          avatarUrl: p.owner.avatar_url,
+          githubUrl: p.owner.html_url,
+        },
+      }))
+      .sort((a, b) => b.stargazersCount - a.stargazersCount);
 
+    const contributionRes = await fetchGithubContributions(username);
+    console.log(contributionRes);
     return {
       name: githubUser.name,
       avatarUrl: githubUser.avatar_url,
@@ -52,7 +90,8 @@ export class AppService {
       socialLinks: socials,
       bio: githubUser.bio,
       blog: githubUser.blog,
-      topProjects: [],
+      topProjects: repos,
+      favoriteProjects: favoriteProjects,
     };
   }
 

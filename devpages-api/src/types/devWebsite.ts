@@ -24,13 +24,6 @@ export type DevWebsite = {
   };
 };
 
-type GithubUserTopProject = {
-  name: string;
-  description: string;
-  url: string;
-  language: string;
-};
-
 export type DevWebsiteGithubProps = {
   name: string | null;
   avatarUrl: string;
@@ -42,5 +35,20 @@ export type DevWebsiteGithubProps = {
   bio: string | null;
   blog: string | null;
   socialLinks: GithubUserSocial[];
-  topProjects: GithubUserTopProject[];
+
+  topProjects: Project[];
+  favoriteProjects: Project[];
+};
+
+export type Project = {
+  name: string;
+  url: string;
+  description: string | null;
+  language: string;
+  stargazersCount: number;
+  owner: {
+    username: string;
+    avatarUrl: string;
+    githubUrl: string;
+  };
 };
