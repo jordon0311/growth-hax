@@ -12,7 +12,7 @@ export class AppController {
 
   @Get('/user/:username')
   async fetchUser(@Param('username') username: string) {
-    const user = await this.appService.fetchUser(username);
+    const user = await this.appService.fetchUserInfo(username);
     return { data: user };
   }
 }

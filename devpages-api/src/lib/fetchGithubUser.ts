@@ -1,8 +1,6 @@
-import axios, { isAxiosError } from 'axios';
+import axios from 'axios';
 
-import { GithubUser } from 'src/lib/githubUser';
-
-const axiosInstance = axios.create({
+export const gitAxios = axios.create({
   baseURL: 'https://api.github.com',
   headers: {
     Accept: 'application/vnd.github+json',
@@ -11,20 +9,3 @@ const axiosInstance = axios.create({
   },
   timeout: 10000,
 });
-
-export const fetchGithubUser = async (username: string) => {
-  try {
-    const res = await axiosInstance.get<GithubUser>(`/users/${username}`);
-    return res.data;
-  } catch (error) {
-    console.error(error);
-    if (isAxiosError(error)) {
-      console.error(
-        'Error fetching github user: ',
-        JSON.stringify(error.response.data, null, 2),
-      );
-    } else {
-      console.error('Error fetching github user: ', error);
-    }
-  }
-};
