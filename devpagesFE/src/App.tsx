@@ -14,12 +14,18 @@ const instance = axios.create({
 
 function App() {
   const [data, setData] = useState<ReturnedDataType | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
+  console.log("username", username);
+
+  useEffect(() => {
+    const pathArray = window.location.pathname.split('/');
+    const user = pathArray.length > 1 ? pathArray[1] : null;
+    setUsername(user);
+  }, []);
   const fetchData = async () => {
     console.log("HELLLOOO fetching data");
     try {
-      const response = await instance.get<ReturnedDataType>(
-        "/user/jordon0311/dev_page"
-      );
+      const response = await instance.get<ReturnedDataType>(`/user/${username}/dev_page`);
       const data = response.data;
       console.log("receieved", data);
       setData(data);
@@ -29,8 +35,9 @@ function App() {
   };
   useEffect(() => {
     console.log("mount");
+    if (!username) return;
     fetchData();
-  }, []);
+  }, [username]);
   console.log("bruhhh");
   console.log("hereee", data);
   if (!data) return <div>Loading...</div>;
