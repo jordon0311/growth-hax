@@ -24,6 +24,13 @@ export type DevWebsite = {
   };
 };
 
+type GithubUserTopProject = {
+  name: string;
+  description: string;
+  url: string;
+  language: string;
+};
+
 export type DevWebsiteGithubProps = {
   name: string | null;
   avatarUrl: string;
@@ -32,6 +39,8 @@ export type DevWebsiteGithubProps = {
   contactEmail: string | null;
   activityChart: unknown;
   location: string | null;
+  bio: string | null;
+  blog: string | null;
   socialLinks: GithubUserSocial[];
-  topProjects: string[];
+  topProjects: GithubUserTopProject[];
 };
