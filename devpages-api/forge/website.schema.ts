@@ -1,5 +1,5 @@
 // ./forge/endpointSchema.ts
-import z from "zod";
+import z from 'zod';
 
 // Define the main person schema
 const WebsiteSchema = z.object({
@@ -37,8 +37,8 @@ type EndpointConfig = {
 };
 
 export const config: EndpointConfig = {
-  path: "dev-website",
+  path: 'dev-website',
   public: true,
-  name: "Dev Website",
+  name: 'Dev Website',
   description: "Generates a schema for a developer's personal website",
 };
