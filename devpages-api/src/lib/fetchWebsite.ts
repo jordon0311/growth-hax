@@ -1,4 +1,5 @@
 import axios, { isAxiosError } from 'axios';
+console.log(process.env.FORGE_API_KEY);
 
 const axiosInstance = axios.create({
   baseURL: 'https://api.forge-ml.com/q/jordonwaters',
