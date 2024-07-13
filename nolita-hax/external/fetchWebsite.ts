@@ -13,7 +13,7 @@ export const fetchWebsite = async (prompt: string) => {
       console.error(
         chalk.redBright(
           "Error fetching website schema: ",
-          JSON.stringify(error.response?.data, null, 2)
+          JSON.stringify(error.response, null, 2)
         )
       );
     } else {

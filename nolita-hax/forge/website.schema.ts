@@ -3,7 +3,7 @@ import z from "zod";
 
 // Define the main person schema
 const WebsiteSchema = z.object({
-  bio: z.string().max(500),
+  bio: z.string().max(500).min(300),
   colorPalette: z.object({
     accent: z.string().regex(/^#[0-9A-F]{6}$/i),
     background: z.string().regex(/^#[0-9A-F]{6}$/i),
@@ -11,13 +11,13 @@ const WebsiteSchema = z.object({
     primary: z.string().regex(/^#[0-9A-F]{6}$/i),
   }),
   fontFamily: z.string(),
-  interests: z.array(z.string()).min(3),
+  interests: z.array(z.string()).min(5),
   location: z.object({
     city: z.string(),
     state: z.string(),
   }),
   quote: z.string(),
-  skills: z.array(z.string()).min(4),
+  skills: z.array(z.string()).min(6),
 });
 
 export default WebsiteSchema;
