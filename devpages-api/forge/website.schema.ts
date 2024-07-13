@@ -6,8 +6,9 @@ const WebsiteSchema = z.object({
   bio: z
     .string()
     .max(500)
-    .min(300)
-    .describe('A short bio of the user, between 300 and 500 characters long'),
+    .describe(
+      'A short bio of the user, at least 300 characters long. Be creative and use all of the info you hava available to you.',
+    ),
   colorPalette: z.object({
     accent: z.string().regex(/^#[0-9A-F]{6}$/i),
     background: z.string().regex(/^#[0-9A-F]{6}$/i),
