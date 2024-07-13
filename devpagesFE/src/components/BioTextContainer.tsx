@@ -40,7 +40,7 @@ const BioTextContainer = ({ data }: { data: ReturnedDataType }) => {
           <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-9000">
             Github Contributions
           </h2>
-          <Tabs defaultValue="squares" className="w-[400px]">
+          <Tabs defaultValue="squares" className="w-full">
             <TabsList>
               <TabsTrigger value="chart">Chart</TabsTrigger>
               <TabsTrigger value="squares">Squares</TabsTrigger>

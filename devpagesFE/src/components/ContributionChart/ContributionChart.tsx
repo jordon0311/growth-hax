@@ -11,7 +11,6 @@ import {
   VictoryTooltip,
 } from "victory";
 import { ContributionDay } from "../../types.types";
-import { useWindowSize } from "./hooks/useWindowResize";
 import { useZoom } from "./hooks/useZoom";
 
 type Props = {
@@ -47,9 +46,9 @@ export const ContributionChart: FC<Props> = ({ contributionDays }) => {
     setZoomDomain,
   } = useZoom();
   const formattedTimeSeries = formatter(contributionDays);
-  const size = useWindowSize();
+  const size = { width: 800 };
   return (
-    <div>
+    <div className="max-w-full">
       <VictoryChart
         width={size.width}
         theme={VictoryTheme.grayscale}
