@@ -1,6 +1,7 @@
-import fetch from 'node-fetch';
+import axios from 'axios';
 import { ContributionApiResponse } from 'src/types/githubContributions';
 
+const TOKEN = process.env.GITHUB_TOKEN;
 const query = `
 query($userName:String!) {
   user(login: $userName){
@@ -18,6 +19,12 @@ query($userName:String!) {
   }
 }
 `;
+
+const instance = axios.create({
+  headers: {
+    Authorization: `Bearer ${TOKEN}`,
+  },
+});
 export async function fetchGithubContributions(
   userName: string,
 ): Promise<ContributionApiResponse> {
@@ -26,13 +33,16 @@ export async function fetchGithubContributions(
     "userName": "${userName}"
   }
 `;
-  const body = {
-    query,
-    variables,
-  };
-  const res = await fetch('https://api.github.com/graphql', {
-    method: 'POST',
-    body: JSON.stringify(body),
-  });
-  return res.json();
+  console.log({ token: TOKEN });
+  const res = await instance
+    .post('https://api.github.com/graphql', {
+      query,
+      variables,
+    })
+    .catch((err) => {
+      console.error(JSON.stringify(err.data, null, 2));
+      return { data: null };
+    });
+
+  return res;
 }

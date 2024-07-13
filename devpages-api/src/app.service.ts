@@ -35,64 +35,70 @@ export class AppService {
   }
 
   async fetchUserInfo(username: string): Promise<DevWebsiteGithubProps> {
-    const res = await this.gitApi.get<GithubUser>(`/users/${username}`);
-    const githubUser = res.data;
-    console.log({ githubUser });
+    try {
+      const res = await this.gitApi.get<GithubUser>(`/users/${username}`);
+      const githubUser = res.data;
+      console.log({ githubUser });
 
-    const socialAccountsRes = await this.gitApi<GithubUserSocial[]>(
-      `/users/${username}/social_accounts`,
-    );
-    const socials = socialAccountsRes.data;
+      const socialAccountsRes = await this.gitApi<GithubUserSocial[]>(
+        `/users/${username}/social_accounts`,
+      );
+      const socials = socialAccountsRes.data;
 
-    const favoriteProjectsRes = await this.gitApi<GithubRepo[]>(
-      `/users/${username}/starred`,
-    );
-    const favoriteProjects: Project[] = favoriteProjectsRes.data
-      .map((p) => ({
-        name: p.name,
-        url: p.html_url,
-        description: p.description,
-        language: p.language,
-        stargazersCount: p.stargazers_count,
-        owner: {
-          username: p.owner.login,
-          avatarUrl: p.owner.avatar_url,
-          githubUrl: p.owner.html_url,
-        },
-      }))
-      .sort((a, b) => b.stargazersCount - a.stargazersCount);
-    const repoRes = await this.gitApi<GithubRepo[]>(`/users/${username}/repos`);
-    const repos = repoRes.data
-      .map((p) => ({
-        name: p.name,
-        url: p.html_url,
-        description: p.description,
-        language: p.language,
-        stargazersCount: p.stargazers_count,
-        owner: {
-          username: p.owner.login,
-          avatarUrl: p.owner.avatar_url,
-          githubUrl: p.owner.html_url,
-        },
-      }))
-      .sort((a, b) => b.stargazersCount - a.stargazersCount);
+      const favoriteProjectsRes = await this.gitApi<GithubRepo[]>(
+        `/users/${username}/starred`,
+      );
+      const favoriteProjects: Project[] = favoriteProjectsRes.data
+        .map((p) => ({
+          name: p.name,
+          url: p.html_url,
+          description: p.description,
+          language: p.language,
+          stargazersCount: p.stargazers_count,
+          owner: {
+            username: p.owner.login,
+            avatarUrl: p.owner.avatar_url,
+            githubUrl: p.owner.html_url,
+          },
+        }))
+        .sort((a, b) => b.stargazersCount - a.stargazersCount);
+      const repoRes = await this.gitApi<GithubRepo[]>(
+        `/users/${username}/repos`,
+      );
+      const repos = repoRes.data
+        .map((p) => ({
+          name: p.name,
+          url: p.html_url,
+          description: p.description,
+          language: p.language,
+          stargazersCount: p.stargazers_count,
+          owner: {
+            username: p.owner.login,
+            avatarUrl: p.owner.avatar_url,
+            githubUrl: p.owner.html_url,
+          },
+        }))
+        .sort((a, b) => b.stargazersCount - a.stargazersCount);
 
-    const contributionRes = await fetchGithubContributions(username);
-    console.log(contributionRes);
-    return {
-      name: githubUser.name,
-      avatarUrl: githubUser.avatar_url,
-      githubUrl: githubUser.html_url,
-      company: githubUser.company,
-      contactEmail: githubUser.email,
-      activityChart: null,
-      location: githubUser.location,
-      socialLinks: socials,
-      bio: githubUser.bio,
-      blog: githubUser.blog,
-      topProjects: repos,
-      favoriteProjects: favoriteProjects,
-    };
+      const contributionRes = await fetchGithubContributions(username);
+      console.log(contributionRes.data.user.contributionsCollection);
+      return {
+        name: githubUser.name,
+        avatarUrl: githubUser.avatar_url,
+        githubUrl: githubUser.html_url,
+        company: githubUser.company,
+        contactEmail: githubUser.email,
+        activityChart: null,
+        location: githubUser.location,
+        socialLinks: socials,
+        bio: githubUser.bio,
+        blog: githubUser.blog,
+        topProjects: repos,
+        favoriteProjects: favoriteProjects,
+      };
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async createUserDevPage(username: string) {
