@@ -1,4 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
+import { WebRes } from 'src/lib/WebRes';
 import { AppService } from './app.service';
 
 @Controller()
@@ -17,7 +18,9 @@ export class AppController {
   }
 
   @Get('/user/:username/dev_page')
-  async fetchUserDevPage(@Param('username') username: string) {
+  async fetchUserDevPage(
+    @Param('username') username: string,
+  ): Promise<{ data: WebRes }> {
     const devPage = await this.appService.createUserDevPage(username);
     return { data: devPage };
   }

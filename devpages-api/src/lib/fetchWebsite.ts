@@ -18,6 +18,7 @@ export const fetchWebsite = async (prompt: string) => {
     return res.data;
   } catch (error) {
     if (isAxiosError(error)) {
+      console.warn(error);
       console.error(
         'Error fetching website schema: ',
         JSON.stringify(error.response.data, null, 2),

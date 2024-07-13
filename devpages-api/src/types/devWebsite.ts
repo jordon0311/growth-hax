@@ -31,7 +31,6 @@ export type DevWebsiteGithubProps = {
   githubUrl: string;
   company: string | null;
   contactEmail: string | null;
-  activityChart: unknown;
   location: string | null;
   bio: string | null;
   blog: string | null;

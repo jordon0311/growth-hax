@@ -91,7 +91,6 @@ export class AppService {
         githubUrl: githubUser.html_url,
         company: githubUser.company,
         contactEmail: githubUser.email,
-        activityChart: null,
         location: githubUser.location,
         socialLinks: socials,
         bio: githubUser.bio,
