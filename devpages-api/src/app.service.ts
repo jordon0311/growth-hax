@@ -81,7 +81,7 @@ export class AppService {
         .sort((a, b) => b.stargazersCount - a.stargazersCount);
 
       const contributionRes = await fetchGithubContributions(username);
-      console.log(contributionRes.data.user.contributionsCollection);
+      console.log(contributionRes?.data);
       return {
         name: githubUser.name,
         avatarUrl: githubUser.avatar_url,
